@@ -4,7 +4,7 @@ options(max.print=999999)
 vp <- data.frame(x.V8=numeric(), x.V1=numeric(), y=raw())
 
 #Load existing data
-vp <- read.csv("C:/Users/Paul/SVM/P08_vp.csv")
+vp <- read.csv("C:/Users/Paul/SVM/P01_vp.csv")
 plot(vp$x.V1, vp$x.V8, pch = 19, col = c("orange","yellowgreen","cadetblue")[unclass(vp$y)], xlab="Time", ylab="Velocity", main="SVM Training Data")
 #far, med, near
 
@@ -17,7 +17,7 @@ summary(svmfit)
 # Predict new data
 #new_file = readline(prompt = "Enter complete directory and filename: ")
 #dist_new = readline(prompt = "What distance? (Near/Medium/Far): ")
-new_file = "C:/Users/Paul/SVM/P08.csv"
+new_file = "C:/Users/Paul/SVM/P01.csv"
 dist_new = "Medium"
 
 vp_new <- read.csv(file = new_file, header = FALSE, skip = 1)[ ,c(8, 1)]
@@ -37,15 +37,15 @@ tatpeak = tatpeak$V1
 tatpeak
 peak <- data.frame(tatpeak, y_peak)
 
-#Extract 25% Before Peak
-get25 = as.integer(nrow(vp_new)*0.25)
-get25
-lowerlimit = x_peak - get25
+#Extract 10% Before Peak
+get10 = as.integer(nrow(vp_new)*0.1)
+get10
+lowerlimit = x_peak - get10
 lowerlimit
 test_vp_new = vp_new[lowerlimit:x_peak, ]
 test_vp_new
 
-#Predict 25% Before Peak
+#Predict 10% Before Peak
 test_vp_new <- data.frame(x.V8 = test_vp_new$V8, x.V1 = test_vp_new$V1, y=dist_new)
 ypred = predict(svmfit, test_vp_new)
 table(predict = ypred, truth = test_vp_new$y)
