@@ -7,6 +7,8 @@ vp <- data.frame(x.V8=numeric(), x.V1=numeric(), y=raw())
 #vp <- read.csv("C:/Users/Paul/OneDrive - University of Leeds/Side Projects/SVM Prehension/Results/P01_vp.csv")
 #plot(vp$x.V1, vp$x.V8, col=vp$y)
 
+# The dataset subfolders are organised as Participant/Distance/Object/File_description/Trial.extension 
+
 #Import 3 trials per DISTANCE
 file_directory = "C:/Users/mnpdeb/SVMPrehension"
 #p_code <- readline(prompt = "Enter participant code (e.g. /P01): ")
@@ -16,7 +18,7 @@ file_extension = ".P05.csv"
 
 for (i in 1:3)
 {
-  dist_code <- readline(prompt = "Enter distance (e.g. Near/Medium/Far): ")
+  dist_code <- readline(prompt = "Enter distance folder (e.g. Near/Medium/Far): ")
   for (i in 1:10)
   {
     obj_code <- readline(prompt = "Enter object code (e.g. /0): ")
@@ -26,9 +28,9 @@ for (i in 1:3)
       file_name <- paste(file_directory, p_code, dist_code, obj_code, file_description, trial_sample, file_extension, sep="")
       vp_import <- read.csv(file = file_name, header = FALSE)[ ,c(8, 1)]
       
+      # set x and y axis
       y = rep(dist_code, nrow(vp_import))
       vp_data <- data.frame(x = vp_import, y = y)
-      
       vp <- rbind(vp, vp_data)
       plot(vp$x.V1, vp$x.V8, col=vp$y)
     }
